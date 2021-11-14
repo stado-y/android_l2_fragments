@@ -5,14 +5,14 @@
                 <item
                     android:id="@+id/nav_1"
                     android:icon="@drawable/ic_item_img"
-                    android:title="Список 1" />
+                    android:title="@string/nav_menu_1" />
                 <item
                     android:id="@+id/nav_2"
                     android:icon="@drawable/ic_item_img"
-                    android:title="Список 2" />
+                    android:title="@string/nav_menu_2" />
                 <item
                     android:id="@+id/nav_3"
                     android:icon="@drawable/ic_item_img"
-                    android:title="Список 3" />
+                    android:title="@string/nav_menu_3" />
         </group>
 </menu>
