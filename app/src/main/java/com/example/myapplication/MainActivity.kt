@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity(), NavFragmentClickListener {
     private val navdata: navData by viewModels()
     lateinit var binding: ActivityMainBinding
 
-    lateinit var listFragment: ListFragment
-    lateinit var navFragment: NavFragment
+//    lateinit var listFragment: ListFragment
+//    lateinit var navFragment: NavFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), NavFragmentClickListener {
         }
         else {
 
-            itemNum = savedInstanceState.getInt("itemNum", R.id.action_navigation)
+            itemNum = savedInstanceState.getInt("itemNum", R.id.nav_1)
             navdata.navItemChosen.value = itemNum
         }
 
@@ -55,15 +55,15 @@ class MainActivity : AppCompatActivity(), NavFragmentClickListener {
         //navdata.navItemChosen.value = itemNum
     }
 
-    override fun onNavItemClick(itemId: Int) {
-        Toast.makeText(this, "${ itemNum }", Toast.LENGTH_SHORT).show()
+    override fun onNavItemClick(itemid: Int) {
+        //Toast.makeText(this, "${ itemNum }", Toast.LENGTH_SHORT).show()
 
         itemNum = 1
-        when(itemId)
+        when(itemid)
         {
-            R.id.action_search -> itemNum = 1
-            R.id.action_settings -> itemNum = 2
-            R.id.action_navigation -> itemNum = 3
+            R.id.nav_1 -> itemNum = 1
+            R.id.nav_2 -> itemNum = 2
+            R.id.nav_3 -> itemNum = 3
         }
         navdata.navItemChosen.value = itemNum
         //listFragment.updateRCViewWithItemNum(itemNum)

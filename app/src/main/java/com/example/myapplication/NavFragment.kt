@@ -13,17 +13,22 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import com.example.myapplication.databinding.FragmentNavBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 
 interface NavFragmentClickListener {
     fun onNavItemClick(itemid: Int)
 }
 
 
-class NavFragment: Fragment() {
+class NavFragment: Fragment(), NavigationView.OnNavigationItemSelectedListener {
 
     private val navdata: navData by activityViewModels()
 
     lateinit var binding: FragmentNavBinding
+
+    private var savedItem = R.id.nav_1
+
+    private var stateRestored: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,25 +41,45 @@ class NavFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        navdata.navItemChosen.observe(activity as LifecycleOwner, {
-//
-//            binding.botNavView.selectedItemId = it
-//        })
+        Log.d("navFragment", "ONVIEW CREATED")
+
+
+        Log.d("navFragment", "onstart item : ${ savedItem }")
+
+
+            navdata.navItemChosen.observe(activity as LifecycleOwner, {
+                Log.d("navFragment", "saved item get")
+                when (it) {
+
+                    2 -> savedItem = R.id.nav_2
+                    3 -> savedItem = R.id.nav_3
+                }
+                Log.d("navFragment", "after get item : ${savedItem}")
+                if (!stateRestored) {
+                    binding.botNavView?.setSelectedItemId(savedItem)
+                    binding.navView?.setCheckedItem(savedItem)
+                    stateRestored = true;
+                }
+            })
 
 
         //тут слушать нажотия
-        binding.botNavView.setOnNavigationItemSelectedListener {
+        binding.botNavView?.setOnNavigationItemSelectedListener {
 
-
-            (activity as? NavFragmentClickListener)?.onNavItemClick(it.itemId)
-            true
+            onNavigationItemSelected(it)
         }
+        binding.navView?.setNavigationItemSelectedListener(this)
+
     }
-
-
 
     companion object {
         @JvmStatic
         fun newInstance() = NavFragment()
     }
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        (activity as? NavFragmentClickListener)?.onNavItemClick(item.itemId)
+        return true
+    }
+
 }
