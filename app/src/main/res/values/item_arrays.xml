@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="title">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
+    <string-array name="text">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
+    <array name="image">
+        <item>@drawable/ic_item_img</item>
+        <item>@drawable/ic_item_img</item>
+        <item>@drawable/ic_item_img</item>
+        <item>@drawable/ic_item_img</item>
+        <item>@drawable/ic_item_img</item>
+        <item>@drawable/ic_item_img</item>
+    </array>
+
+
+
+
+    <string-array name="title_2">
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="text_2">
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <array name="image_2">
+        <item>@drawable/ic_item_img</item>
+        <item>@drawable/ic_item_img</item>
+        <item>@drawable/ic_item_img</item>
+        <item>@drawable/ic_item_img</item>
+        <item>@drawable/ic_item_img</item>
+        <item>@drawable/ic_item_img</item>
+    </array>
+
+
+
+
+    <string-array name="title_3">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="text_3">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <array name="image_3">
+        <item>@drawable/ic_item_img</item>
+        <item>@drawable/ic_item_img</item>
+        <item>@drawable/ic_item_img</item>
+        <item>@drawable/ic_item_img</item>
+        <item>@drawable/ic_item_img</item>
+        <item>@drawable/ic_item_img</item>
+    </array>
+
+</resources>
