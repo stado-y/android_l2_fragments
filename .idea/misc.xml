@@ -4,11 +4,19 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/android_lessons/2_frag/app/src/main/res/drawable-anydpi/ic_item_img.xml" value="0.23541666666666666" />
+        <entry key="..\:/android_lessons/2_frag/app/src/main/res/drawable-anydpi/ic_item_img_2.xml" value="0.23177083333333334" />
+        <entry key="..\:/android_lessons/2_frag/app/src/main/res/drawable-anydpi/ic_item_img_3.xml" value="0.23177083333333334" />
+        <entry key="..\:/android_lessons/2_frag/app/src/main/res/drawable-anydpi/ic_item_img_4.xml" value="0.23177083333333334" />
+        <entry key="..\:/android_lessons/2_frag/app/src/main/res/drawable-anydpi/ic_item_img_5.xml" value="0.23177083333333334" />
+        <entry key="..\:/android_lessons/2_frag/app/src/main/res/drawable-anydpi/ic_item_img_6.xml" value="0.23177083333333334" />
+        <entry key="..\:/android_lessons/2_frag/app/src/main/res/layout-land/activity_main.xml" value="0.18562610229276896" />
+        <entry key="..\:/android_lessons/2_frag/app/src/main/res/layout-land/fragment_list.xml" value="0.6773255813953488" />
+        <entry key="..\:/android_lessons/2_frag/app/src/main/res/layout-land/fragment_nav.xml" value="0.18562610229276896" />
         <entry key="..\:/android_lessons/2_frag/app/src/main/res/layout/activity_main.xml" value="0.21739130434782608" />
         <entry key="..\:/android_lessons/2_frag/app/src/main/res/layout/fragment_list.xml" value="0.21739130434782608" />
         <entry key="..\:/android_lessons/2_frag/app/src/main/res/layout/fragment_nav.xml" value="0.21739130434782608" />
         <entry key="..\:/android_lessons/2_frag/app/src/main/res/layout/item_layout.xml" value="0.21739130434782608" />
-        <entry key="..\:/android_lessons/2_frag/app/src/main/res/menu/bot_nav_menu.xml" value="1.5035714285714286" />
+        <entry key="..\:/android_lessons/2_frag/app/src/main/res/menu/bot_nav_menu.xml" value="0.25" />
       </map>
     </option>
   </component>
