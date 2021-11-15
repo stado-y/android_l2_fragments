@@ -12,14 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 class RCAdapter(listArray:ArrayList<ListItem>, context: Context):
     RecyclerView.Adapter<RCAdapter.ViewHolder>() {
 
-    var RClistArray = listArray
-    var RCcontext = context
+    private var RClistArray = listArray
+    private var RCcontext = context
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        val listImage = view.findViewById<ImageView>(R.id.itemImage)
-        val listTitle = view.findViewById<TextView>(R.id.itemTitle)
-        val listText = view.findViewById<TextView>(R.id.itemText)
+        val listImage: ImageView = view.findViewById(R.id.itemImage)
+        val listTitle: TextView = view.findViewById(R.id.itemTitle)
+        val listText: TextView = view.findViewById(R.id.itemText)
 
 
         fun bind(listitem: ListItem, context: Context) {

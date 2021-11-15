@@ -9,29 +9,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.FragmentListBinding
-import android.os.Parcelable
 import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
-import com.example.myapplication.databinding.FragmentNavBinding
 
 
 class ListFragment: Fragment() {
 
     private val navdata: navData by activityViewModels()
 
-    lateinit var binding: FragmentListBinding
+    private val chosenItem: Int? = null
 
-    var RCadapter: RCAdapter? = null
+    private lateinit var binding: FragmentListBinding
 
-    var namelist = ArrayList<ListItem>()
+    private var RCadapter: RCAdapter? = null
+
+    private var namelist = ArrayList<ListItem>()
 
     //lateinit var itemsList: ArrayList<ListItem>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentListBinding.inflate(inflater)
 
         return binding.root
@@ -42,14 +42,6 @@ class ListFragment: Fragment() {
 
 
         Log.d("listFragment", "onviewcreated")
-        namelist.addAll(
-            fillArrays(
-                resources.getStringArray(R.array.title),
-                resources.getStringArray(R.array.text),
-                getImageId(R.array.image)
-            )
-        )
-        Log.d("listFragment", "namelist filled")
 
         binding.rcView.hasFixedSize()
         binding.rcView.layoutManager = LinearLayoutManager(activity)
@@ -58,14 +50,13 @@ class ListFragment: Fragment() {
 
         Log.d("listFragment", "rcview added")
 
-        if (isAdded && activity != null) {
-            Log.d("listFragment", "livedata passed check")
-            navdata.navItemChosen.observe((activity as LifecycleOwner), {
-                var lol = it
-                Log.d("listFragment", "livedata value : ${ lol }")
-                updateRCViewWithItemNum(lol)
-            })
-        }
+
+        navdata.navItemChosen.observe((activity as LifecycleOwner), {
+            val pop = it
+            Log.d("listFragment", "livedata value : ${ pop }")
+            updateRCViewWithItemNum(pop)
+        })
+
         Log.d("listFragment", "after livedata")
     }
 
@@ -79,27 +70,26 @@ class ListFragment: Fragment() {
         fun newInstance() = ListFragment()
     }
 
+    private fun fillArrays(
+        titleArray: Array<String>,
+        textArray: Array<String>,
+        imageArray: IntArray
+    ): ArrayList<ListItem> {
 
+        val listItemArray = ArrayList<ListItem>()
 
+        for (n in 0 until titleArray.size) {
 
-
-
-    fun fillArrays(titleArray: Array<String>, textArray: Array<String>, imageArray: IntArray): ArrayList<ListItem> {
-
-        var listItemArray = ArrayList<ListItem>()
-
-        for (n in 0..titleArray.size-1) {
-
-            var listItem = ListItem(imageArray[n], titleArray[n], textArray[n])
+            val listItem = ListItem(imageArray[n], titleArray[n], textArray[n])
             listItemArray.add(listItem)
         }
         return listItemArray
     }
 
-    fun getImageId(imageArrayId: Int): IntArray {
+    private fun getImageId(imageArrayId: Int): IntArray {
 
-        var tArray: TypedArray = resources.obtainTypedArray(imageArrayId)
-        var count = tArray.length()
+        val tArray: TypedArray = resources.obtainTypedArray(imageArrayId)
+        val count = tArray.length()
         val imgIDS = IntArray(count)
 
         for(i in imgIDS.indices) {
@@ -110,27 +100,35 @@ class ListFragment: Fragment() {
         return imgIDS
     }
 
-    fun updateRCViewWithItemNum(irtemNum: Int) {
-        var titleArray = resources.getStringArray(R.array.title)
-        var textArray = resources.getStringArray(R.array.text)
-        var imageArray = getImageId(R.array.image)
+    private fun updateRCViewWithItemNum(itemId: Int) {
 
-        when(irtemNum) {
+        if (chosenItem != itemId) {
 
-            2 -> {
-                titleArray = resources.getStringArray(R.array.title_2)
-                textArray = resources.getStringArray(R.array.text_2)
-                imageArray = getImageId(R.array.image_2)
+            var titleArray = resources.getStringArray(R.array.title)
+            var textArray = resources.getStringArray(R.array.text)
+            var imageArray = getImageId(R.array.image)
+
+            when (itemId) {
+
+                R.id.nav_2 -> {
+                    titleArray = resources.getStringArray(R.array.title_2)
+                    textArray = resources.getStringArray(R.array.text_2)
+                    imageArray = getImageId(R.array.image_2)
+                }
+                R.id.nav_3 -> {
+                    titleArray = resources.getStringArray(R.array.title_3)
+                    textArray = resources.getStringArray(R.array.text_3)
+                    imageArray = getImageId(R.array.image_3)
+                }
+
             }
-            3 -> {
-                titleArray = resources.getStringArray(R.array.title_3)
-                textArray = resources.getStringArray(R.array.text_3)
-                imageArray = getImageId(R.array.image_3)
-            }
-
+            val list = fillArrays(titleArray, textArray, imageArray)
+            RCadapter?.updateAdapter(list)
+            binding.rcView.smoothScrollToPosition(0)
         }
-        var list = fillArrays(titleArray, textArray, imageArray)
-        RCadapter?.updateAdapter(list)
-        binding.rcView.smoothScrollToPosition(0)
+        else {
+
+            Log.d("listFragment", "chosenItem : ${ chosenItem } != itemId : ${ itemId }")
+        }
     }
 }
