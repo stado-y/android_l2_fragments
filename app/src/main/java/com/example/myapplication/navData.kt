@@ -9,4 +9,14 @@ class navData: ViewModel() {
         MutableLiveData<Int>()
     }
 
+    fun getChosenNavItem(): Int? {
+
+        return navItemChosen.value
+    }
+
+    fun setChosenNavItem(itemId: Int) {
+
+        navItemChosen.value = itemId
+    }
+
 }
