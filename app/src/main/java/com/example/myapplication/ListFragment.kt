@@ -18,7 +18,7 @@ class ListFragment: Fragment() {
 
     private val navdata: navData by activityViewModels()
 
-    private val chosenItem: Int? = null
+    private var chosenItem: Int? = null
 
     private lateinit var binding: FragmentListBinding
 
@@ -103,6 +103,8 @@ class ListFragment: Fragment() {
     private fun updateRCViewWithItemNum(itemId: Int) {
 
         if (chosenItem != itemId) {
+
+            chosenItem = itemId
 
             var titleArray = resources.getStringArray(R.array.title)
             var textArray = resources.getStringArray(R.array.text)
