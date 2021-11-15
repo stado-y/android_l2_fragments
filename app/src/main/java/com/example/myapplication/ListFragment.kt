@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.content.Context
 import android.content.res.TypedArray
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,43 +27,93 @@ class ListFragment: Fragment() {
 
     private var namelist = ArrayList<ListItem>()
 
+    private lateinit var savedLayout: Parcelable
+
+    private var restoredLayout: Parcelable? = null
+
     //lateinit var itemsList: ArrayList<ListItem>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentListBinding.inflate(inflater)
 
-        return binding.root
+            binding = FragmentListBinding.inflate(inflater)
+
+            return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         Log.d("listFragment", "onviewcreated")
 
-        binding.rcView.hasFixedSize()
-        binding.rcView.layoutManager = LinearLayoutManager(activity)
-        RCadapter = RCAdapter(namelist, binding.rcView.context)
-        binding.rcView.adapter = RCadapter
+            binding.rcView.hasFixedSize()
+            binding.rcView.layoutManager = LinearLayoutManager(activity)
+        if (savedInstanceState == null) {
+            RCadapter = RCAdapter(namelist, binding.rcView.context)
+            binding.rcView.adapter = RCadapter
 
-        Log.d("listFragment", "rcview added")
+            Log.d("listFragment", "rcview added")
+        }
 
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        Log.d("listFragment", "ONATTACH")
+
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+
+        Log.d("listFragment", "onViewStateRestored")
+
+        if (savedInstanceState != null) {
+            restoredLayout = savedInstanceState?.getParcelable("RcLayoutState")
+
+            if (this.restoredLayout != null) {
+
+                var restoredNavItem = navdata.getChosenNavItem() ?: R.id.nav_1
+
+                namelist = getListFromId(restoredNavItem)
+
+                RCadapter = RCAdapter(namelist, binding.rcView.context)
+                binding.rcView.adapter = RCadapter
+
+                binding.rcView.layoutManager?.onRestoreInstanceState(restoredLayout)
+            }
+
+        }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         navdata.navItemChosen.observe((activity as LifecycleOwner), {
             val pop = it
-            Log.d("listFragment", "livedata value : ${ pop }")
-            updateRCViewWithItemNum(pop)
-        })
+            Log.d("listFragment", "livedata value : ${pop}")
 
+            updateRCViewWithItemNum(pop,true)
+        })
         Log.d("listFragment", "after livedata")
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        Log.d("listFragment", "ONATTACH")
+    override fun onPause() {
+        super.onPause()
+
+        savedLayout = binding.rcView.layoutManager?.onSaveInstanceState()!!
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putParcelable("RcLayoutState", savedLayout)
+
     }
 
     companion object {
@@ -100,8 +151,25 @@ class ListFragment: Fragment() {
         return imgIDS
     }
 
-    private fun updateRCViewWithItemNum(itemId: Int) {
+    private fun updateRCViewWithItemNum(itemId: Int, resetPosition: Boolean) {
 
+        val newList = getListFromId(itemId)
+
+        if (newList != namelist) {
+
+            RCadapter?.updateAdapter(newList)
+
+            if (resetPosition) {
+                binding.rcView.smoothScrollToPosition(0)
+                Log.d("listFragment", "RESET RC POSITION!!!!")
+            }
+
+        }
+
+    }
+
+    private fun getListFromId (itemId: Int): ArrayList<ListItem> {
+        val list: ArrayList<ListItem>
         if (chosenItem != itemId) {
 
             chosenItem = itemId
@@ -124,13 +192,17 @@ class ListFragment: Fragment() {
                 }
 
             }
-            val list = fillArrays(titleArray, textArray, imageArray)
-            RCadapter?.updateAdapter(list)
-            binding.rcView.smoothScrollToPosition(0)
+            list = fillArrays(titleArray, textArray, imageArray)
+
         }
         else {
 
-            Log.d("listFragment", "chosenItem : ${ chosenItem } != itemId : ${ itemId }")
+            list = namelist
+            Log.d("listFragment", "chosenItem : ${ chosenItem } == itemId : ${ itemId }")
+
         }
+        return list
+
     }
+
 }
